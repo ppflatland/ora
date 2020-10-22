@@ -1,0 +1,39 @@
+# Variable configuration.
+- include_vars: RedHat.yml
+
+- name: Install EPEL repo
+  ignore_errors: yes
+  become: true
+  yum:
+    state: present
+    name: epel-release
+  
+- name: Install common software requirements nagios
+  ignore_errors: yes
+  become: true
+  yum:
+    state: present
+    name: 
+      - nrpe 
+      - nagios-plugins 
+      - nagios-plugins-disk 
+      - nagios-plugins-dummy 
+      - nagios-plugins-load 
+      - nagios-plugins-mysql 
+      - nagios-plugins-procs
+
+- name: Installing pip
+  yum:
+    name: python2-pip
+    state: present
+
+- name: Installing pymysql for dependency
+  pip:
+    name: pymysql
+    state: present
+
+- name: Configuration nrpe
+  template:
+    src: "hoster_centos.j2"
+    dest: "/etc/nrpe.d/hoster.cfg"
+  notify: restart nrpe

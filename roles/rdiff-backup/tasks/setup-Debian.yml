@@ -1,0 +1,31 @@
+- name: Install common software requirements rdiff-backup
+  apt:
+    pkg:
+      - librsync-dev
+      - python-dev
+      - gcc
+    state: present
+    install_recommends: no
+    update_cache: yes
+
+- name: Copy archive rdiff-backup
+  copy:
+    src: rdiff-backup-1.3.3.tar.gz
+    dest: /opt/
+
+- name: Unarchive a file on the remote machine
+  unarchive:
+    src: /opt/rdiff-backup-1.3.3.tar.gz
+    dest: /opt/
+    remote_src: yes   
+    
+- name: Install rdiff-backup
+  command: "python setup.py install --prefix=/usr"
+  args:
+    chdir: /opt/rdiff-backup-1.3.3
+
+- name: Move libraries 
+  copy:
+    src: /usr/lib/python2.7/site-packages/
+    dest: /usr/lib/python2.7/dist-packages/
+    remote_src: yes

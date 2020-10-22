@@ -1,0 +1,33 @@
+- name: Adding Zabbix repository Ubuntu 20
+  apt:
+    deb: https://repo.zabbix.com/zabbix/5.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_5.0-1+focal_all.deb
+  when: ansible_distribution_major_version == '20'
+
+- name: Adding Zabbix repository Ubuntu 18
+  apt:
+    deb: https://repo.zabbix.com/zabbix/5.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_5.0-1+bionic_all.deb
+  when: ansible_distribution_major_version == '18'
+  
+- name: Adding Zabbix repository Ubuntu 16
+  apt:
+    deb: https://repo.zabbix.com/zabbix/5.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_5.0-1+xenial_all.deb
+  when: ansible_distribution_major_version == '16'
+
+- name: Adding Zabbix repository Ubuntu 14
+  apt:
+    deb: https://repo.zabbix.com/zabbix/5.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_5.0-1+trusty_all.deb
+  when: ansible_distribution_major_version == '14'
+
+- name: Install zabbix-agent
+  apt:
+    name: zabbix-agent
+    state: latest 
+    update_cache: yes
+  notify: start zabbix-agent
+
+- name: Configuration zabbix-agent
+  template:
+    src: "zabbix_agentd.j2"
+    dest: "/etc/zabbix/zabbix_agentd.conf"
+  notify: restart zabbix-agent
+

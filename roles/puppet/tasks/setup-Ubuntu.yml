@@ -1,0 +1,33 @@
+- name: Adding Puppet repository Ubuntu 20
+  apt:
+    deb: https://apt.puppetlabs.com/puppet6-release-focal.deb
+  when: ansible_distribution_major_version == '20'
+
+- name: Adding Puppet repository Ubuntu 18
+  apt:
+    deb: https://apt.puppetlabs.com/puppet6-release-bionic.deb
+  when: ansible_distribution_major_version == '18'
+  
+- name: Adding Puppet repository Ubuntu 16
+  apt:
+    deb: https://apt.puppetlabs.com/puppet6-release-xenial.deb
+  when: ansible_distribution_major_version == '16'
+
+- name: Adding Puppet repository Ubuntu 14
+  apt:
+    deb: https://apt.puppetlabs.com/puppet5-release-trusty.deb
+  when: ansible_distribution_major_version == '14'
+
+- name: Install puppet-agent
+  apt:
+    name: puppet-agent
+    state: latest 
+    update_cache: yes
+  notify: start puppet-agent
+
+- name: Configuration puppet-agent
+  template:
+    src: "puppet.j2"
+    dest: "/etc/puppetlabs/puppet/puppet.conf"
+  notify: restart puppet-agent
+

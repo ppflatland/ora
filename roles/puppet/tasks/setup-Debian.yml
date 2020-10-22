@@ -1,0 +1,46 @@
+- name: install xz-utils
+  apt:
+    name: xz-utils
+    state: latest
+    update_cache: yes
+
+- name: Adding Puppet repository Debian 10
+  apt:
+    deb: https://apt.puppet.com/puppet6-release-buster.deb
+  when: ansible_distribution_major_version == '10'
+
+- name: Adding Puppet repository Debian 9
+  apt:
+    deb: https://apt.puppet.com/puppet6-release-stretch.deb  
+  when: ansible_distribution_major_version == '9'
+  
+- name: Adding Puppet repository Debian 8
+  apt:
+    deb: https://apt.puppet.com/puppet6-release-jessie.deb
+  when: ansible_distribution_major_version == '8'
+
+- name: Adding Puppet repository Debian 7
+  apt:
+    deb: https://apt.puppet.com/puppet5-release-wheezy.deb
+  when: ansible_distribution_major_version == '7'
+
+- name: Install puppet-agent
+  apt:
+    name: puppet-agent
+    state: latest 
+    update_cache: yes
+  notify: start puppet-agent
+
+- name: Configuration puppet-agent
+  template:
+    src: "puppet.j2"
+    dest: "/etc/puppetlabs/puppet/puppet.conf"
+  notify: restart puppet-agent
+
+- name: Delete "ssl"
+  file:
+    path: /etc/puppetlabs/puppet/ssl/
+    state: absent
+  ignore_errors: yes
+  notify: restart puppet-agent
+

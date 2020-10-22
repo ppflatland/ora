@@ -1,0 +1,38 @@
+- name: Adding Puppet repository rhel_8
+  command: rpm -Uvh https://yum.puppet.com/puppet6-release-el-6.noarch.rpm
+  ignore_errors: yes
+  when: ansible_distribution_major_version == '8'
+
+- name: Adding Puppet repository rhel_7
+  command: rpm -Uvh https://yum.puppet.com/puppet6-release-el-7.noarch.rpm
+  ignore_errors: yes
+  when: ansible_distribution_major_version == '7'
+  
+- name: Adding Puppet repository rhel_6
+  command: rpm -Uvh https://yum.puppet.com/puppet6-release-el-6.noarch.rpm
+  ignore_errors: yes
+  when: ansible_distribution_major_version == '6'
+
+- name: Install puppet agent
+  yum:
+    name: puppet-agent
+    state: latest 
+    update_cache: yes
+  notify: start puppet-agent
+
+- name: Configuration puppet-agent
+  template:
+    src: "puppet.j2"
+    dest: "/etc/puppetlabs/puppet/puppet.conf"
+  notify: restart puppet-agent
+
+- name: Delete "ssl"
+  file:
+    path: /etc/puppetlabs/puppet/ssl/
+    state: absent
+  ignore_errors: yes
+  notify: restart puppet-agent
+
+
+
+

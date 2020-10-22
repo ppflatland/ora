@@ -1,0 +1,5 @@
+SourceIP: '{{ ansible_default_ipv4.address }}'
+Server: 95.47.99.52
+ServerActive: 95.47.99.52
+HostMetadata: test_hoster
+Hostname: '{{ ansible_hostname }}'

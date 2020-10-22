@@ -1,0 +1,2 @@
+nrpe: nrpe
+path_to_plugins: '/usr/lib64/nagios/plugins'

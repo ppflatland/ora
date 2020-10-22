@@ -1,0 +1,21 @@
+# Variable configuration.
+- include_vars: Debian.yml
+
+- name: Install common software requirements nagios
+  apt:
+    pkg:
+      - nagios-nrpe-server
+      - nagios-plugins
+      - python-pymysql 
+      - python3-pymysql
+      - python-apt
+      - python3-apt
+    state: present
+    install_recommends: no
+    update_cache: yes
+
+- name: Configuration nrpe
+  template:
+    src: "hoster.j2"
+    dest: "/etc/nagios/nrpe.d/hoster.cfg"
+  notify: restart nrpe

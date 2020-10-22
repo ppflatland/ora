@@ -1,0 +1,16 @@
+---
+- name: restart puppet-agent
+  service:
+    name: puppet
+    state: restarted
+    enabled: yes
+
+- name: start puppet-agent
+  service:
+    name: puppet
+    state: started
+
+
+
+
+

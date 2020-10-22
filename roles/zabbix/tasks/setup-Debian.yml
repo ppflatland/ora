@@ -1,0 +1,39 @@
+- name: install xz-utils
+  apt:
+    name: xz-utils
+    state: latest
+    update_cache: yes
+
+- name: Adding Zabbix repository Debian 10
+  apt:
+    deb: https://repo.zabbix.com/zabbix/5.0/debian/pool/main/z/zabbix-release/zabbix-release_5.0-1+buster_all.deb
+  when: ansible_distribution_major_version == '10'
+
+- name: Adding Zabbix repository Debian 9
+  apt:
+    deb: https://repo.zabbix.com/zabbix/5.0/debian/pool/main/z/zabbix-release/zabbix-release_5.0-1+stretch_all.deb
+  when: ansible_distribution_major_version == '9'
+  
+- name: Adding Zabbix repository Debian 8
+  apt:
+    deb: https://repo.zabbix.com/zabbix/5.0/debian/pool/main/z/zabbix-release/zabbix-release_5.0-1+jessie_all.deb
+  when: ansible_distribution_major_version == '8'
+
+- name: Adding Zabbix repository Debian 7 (agent 4.4 unsupported) 
+  apt:
+    deb: https://repo.zabbix.com/zabbix/4.4/debian/pool/main/z/zabbix-release/zabbix-release_4.4-1+wheezy_all.deb
+  when: ansible_distribution_major_version == '7'
+
+- name: Install zabbix-agent
+  apt:
+    name: zabbix-agent
+    state: latest 
+    update_cache: yes
+  notify: start zabbix-agent
+
+- name: Configuration zabbix-agent
+  template:
+    src: "zabbix_agentd.j2"
+    dest: "/etc/zabbix/zabbix_agentd.conf"
+  notify: restart zabbix-agent
+

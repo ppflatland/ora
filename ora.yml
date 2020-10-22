@@ -1,0 +1,12 @@
+- name: Start install
+  hosts: Administration
+  become: yes
+  
+  roles:
+    - role: zabbix
+      Hostname: "{{ ansible_hostname }}"  #example: hoster.by | default hostname  
+      HostMetadata: test_hosteri          #example: admin_hoster
+    - role: puppet
+      server: puppet.hosterby1.com
+    - role: nagios
+    - role: rdiff-backup

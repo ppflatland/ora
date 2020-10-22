@@ -1,0 +1,33 @@
+server_port={{ server_port }}
+allowed_hosts={{ allowed_hosts }}
+nrpe_user={{ nrpe_user }} 
+nrpe_group={{ nrpe_group }}
+debug={{ debug }}
+
+command[check_load]={{ path_to_plugins }}/check_load -w 5,5,5 -c 10,10,10
+command[check_mysql]={{ path_to_plugins }}/check_mysql -H localhost -unagiostest -pnagiostest
+command[check_disk_root]={{ path_to_plugins }}/check_disk -w 10% -c 5% -K 20% -W 10% /
+command[check_disk_home]={{ path_to_plugins }}/check_disk -w 10% -c 5% -K 20% -W 10% /home
+command[check_disk_mysqldb]={{ path_to_plugins }}/check_disk -w 10% -c 5% -K 20% -W 10% /var/lib/mysql
+command[check_disk_mysqltmp]={{ path_to_plugins }}/check_disk -w 10% -c 5% -K 20% -W 10% /tmp
+command[check_disk_temp]={{ path_to_plugins }}/check_disk -w 10% -c 5% -K 20% -W 10% /tmp
+command[check_disk_tmp]={{ path_to_plugins }}/check_disk -w 10% -c 5% -K 20% -W 10% /tmp
+
+command[check_dmcgi]={{ path_to_plugins }}/check_procs -C dm.cgi -c 0
+#command[check_raid]={{ path_to_plugins }}/check_cciss -s -v
+command[check_raid]={{ path_to_plugins }}/check_dummy 0 "Check Disabled"
+command[check_clamd]={{ path_to_plugins }}/check_clamd -H localhost -p 3310
+command[check_traffic]={{ path_to_plugins }}/check_tcptraffic -c 5000000 -w 2000000 -i eth0 -s 1000
+
+command[check_crond]={{ path_to_plugins }}/check_procs -c 1: -C crond
+command[check_swap_usage]={{ path_to_plugins }}/check_swap -w 60% -c 40%
+command[check_tcptraffic]={{ path_to_plugins }}/check_tcptraffic -w 5000000 -c 10000000 -i eth0 -s 1000
+command[check_mysql_uptime]={{ path_to_plugins }}/mysql_uptime
+command[check_fileopens]={{ path_to_plugins }}/check_open_files.pl -w 70 -c 90
+command[check_socksopens]={{ path_to_plugins }}/check_open_sockets.pl -w 15000 -c 25000
+command[check_extralistenports]={{ path_to_plugins }}/check_extra_listen_tcp.pl -p 80,21,22,445,139,5666,8000,3306,9010,53,3128,953,6010,1723,7580,6011,3690,11211,111,3312,81,24
+command[check_rsyslogd]={{ path_to_plugins }}/check_procs -c 1:1 -C rsyslogd
+command[check_ftpmod]={{ path_to_plugins }}/check_ftpmod
+#command[check_exim_queue]={{ path_to_plugins }}/check_exim_queue -c 10000 -w 8000
+command[check_proftpd]={{ path_to_plugins }}/check_procs -c 1: -C pure-ftpd
+

@@ -1,0 +1,2 @@
+nrpe: nagios-nrpe-server
+path_to_plugins: '/usr/lib/nagios/plugins'
