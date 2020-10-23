@@ -22,12 +22,32 @@
       - nagios-plugins-mysql 
       - nagios-plugins-procs
 
-- name: Installing pip
+- name: Installing pip3
+  ignore_errors: yes
+  yum:
+    name: python3-pip
+    state: present
+  when: ansible_distribution_major_version == '8'
+
+
+- name: Installing pip2
+  ignore_errors: yes
   yum:
     name: python2-pip
     state: present
+  when: ansible_distribution_major_version == '7'
 
-- name: Installing pymysql for dependency
+
+- name: Installing pip
+  ignore_errors: yes
+  yum:
+    name: python-pip
+    state: present
+  when: ansible_distribution_major_version == '6'
+
+
+- name: Installing mysql-python for dependency
+  ignore_errors: yes
   pip:
     name: pymysql
     state: present

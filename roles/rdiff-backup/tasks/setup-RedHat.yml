@@ -1,10 +1,23 @@
 - name: Install common software requirements rdiff-backup
+  ignore_errors: yes
   yum:
     name:
       - librsync-devel
       - python-devel
       - gcc
     state: present
+  when: ansible_distribution_major_version != '8'
+
+- name: Install requirements for rhel_8
+  ignore_errors: no
+  yum:
+    name:
+      - python2 
+      - python2-devel
+      - librsync-devel
+      - gcc
+    state: present
+  when: ansible_distribution_major_version == '8'
 
 - name: Copy archive rdiff-backup
   copy:
@@ -17,8 +30,20 @@
     dest: /opt/
     remote_src: yes   
     
+- name: Install rdiff-backup python3
+  ignore_errors: yes
+  command: "python2 setup.py install --prefix=/usr"
+  args:
+    chdir: /opt/rdiff-backup-1.3.3
+  when: ansible_distribution_major_version == '8'
+
+
 - name: Install rdiff-backup
+  ignore_errors: yes
   command: "python setup.py install --prefix=/usr"
   args:
     chdir: /opt/rdiff-backup-1.3.3
+  when: ansible_distribution_major_version != '8'
+
+
 
