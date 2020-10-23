@@ -5,7 +5,7 @@
   roles:
     - role: zabbix
       Hostname: "{{ ansible_hostname }}"  #example: hoster.by | default hostname  
-      HostMetadata: test_hoster           #example: admin_hoster
+      HostMetadata: admin_hoster           #example: test_hoster
     - role: puppet
     - role: nagios
     - role: rdiff-backup
