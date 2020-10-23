@@ -90,6 +90,11 @@ test_hoster
 admin_hoster
 ```
 ### Запуск сценария
+Скачиваем репозиторий
+```
+git clone https://github.com/ppflatland/ora.git
+```
+Запускаем
 ```
 ansible-playbook ora.yml
 ```
