@@ -65,13 +65,13 @@
 ```
 ##### 
 Перед запуском манифеста редактируем файл hosts и добавляем IP адреса сервером для которых необходимо выполнить данный сценарий ( установка - zabbix - puppet- nagios - rdiff-backup )
-```
+```sh
 [Administration]
 167.99.138.74
 167.99.138.75
 ```
 Далее открываем файл ora.yml и комментируем (если надо) роли которые мы бы не хотели устанавливать на данные сервера
-```
+```sh
 - name: Start install
   hosts: Administration
   become: yes
@@ -89,6 +89,9 @@
 test_hoster
 admin_hoster
 ```
+### Установка ansible
+https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
+
 ### Запуск сценария
 Скачиваем репозиторий
 ```
