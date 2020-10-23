@@ -7,7 +7,7 @@
   - nagios 
   - rdiff-backup (1.3.3)
  
-| tasks/vars/templates | description |
+| file/dir | description |
 | ------ | ------ |
 | ansible.cfg |конфигурационный файл ansible |
 | hosts | файл инвентаризации хостов |
