@@ -8,4 +8,4 @@
       HostMetadata: admin_hoster          #default test_hoster
     - role: puppet
     - role: nagios
-    - role: rdiff-backup
+    #- role: rdiff-backup
