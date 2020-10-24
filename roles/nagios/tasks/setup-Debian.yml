@@ -4,34 +4,18 @@
 - name: Install common software requirements nagios
   ignore_errors: yes
   apt:
-    pkg:
-      - nagios-nrpe-server
-      - nagios-plugins
-        #- python2-pip
-      - python-pip
+    name: "{{ item }}"
     state: present
     install_recommends: no
     update_cache: yes
-  when: ansible_distribution_major_version == '14' or ansible_distribution_major_version == '7' or ansible_distribution_major_version == '8' or  ansible_distribution_major_version == '9' or ansible_distribution_major_version == "10"
+  with_items: "{{ packages }}"
 
-
-- name: Install common software requirements nagios python3
-  ignore_errors: yes
-  apt:
-    pkg:
-      - nagios-nrpe-server
-      - nagios-plugins
-      - python3-pip
-    state: present
-    install_recommends: no
-    update_cache: yes
-  when: ansible_distribution_major_version == '20' or ansible_distribution_major_version == '18' or ansible_distribution_major_version == '16'
-
-- name: Installing pymysql for dependency
+- name: Installing pip_modules for dependency
   ignore_errors: yes
   pip:
-    name: pymysql
+    name: "{{ item }}"
     state: present
+  with_items: "{{ pip_modules }}"  
 
 - name: Configuration nrpe
   template:
