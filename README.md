@@ -18,18 +18,33 @@
 ```
 .
 |-- nagios
+|   |-- files
+|   |   `-- get-pip.py
 |   |-- handlers
 |   |   `-- main.yml
 |   |-- tasks
 |   |   |-- main.yml
+|   |   |-- setup-CentOS.yml
 |   |   |-- setup-Debian.yml
-|   |   `-- setup-RedHat.yml
+|   |   |-- setup-Ubuntu.yml
+|   |   `-- variables.yml
 |   |-- templates
 |   |   |-- hoster.j2
 |   |   `-- hoster_centos.j2
 |   `-- vars
+|       |-- CentOS-6.yml
+|       |-- CentOS-7.yml
+|       |-- CentOS-8.yml
+|       |-- Debian-10.yml
+|       |-- Debian-7.yml
+|       |-- Debian-8.yml
+|       |-- Debian-9.yml
 |       |-- Debian.yml
 |       |-- RedHat.yml
+|       |-- Ubuntu-14.yml
+|       |-- Ubuntu-16.yml
+|       |-- Ubuntu-18.yml
+|       |-- Ubuntu-20.yml
 |       `-- main.yml
 |-- puppet
 |   |-- handlers
