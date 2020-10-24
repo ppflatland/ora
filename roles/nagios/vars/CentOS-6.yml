@@ -1,0 +1,9 @@
+packages_nagios: ['nrpe',
+           'nagios-plugins',
+           'nagios-plugins-disk',
+           'nagios-plugins-dummy',
+           'nagios-plugins-load',
+           'nagios-plugins-mysql',
+           'nagios-plugins-procs']
+
+packages_python: ['MySQL-python']

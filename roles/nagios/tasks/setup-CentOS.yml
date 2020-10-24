@@ -1,0 +1,39 @@
+# Variable configuration.
+- include_vars: RedHat.yml
+
+- name: Install EPEL repo
+  ignore_errors: yes
+  become: true
+  yum:
+    state: present
+    name: epel-release
+
+- name: Install common software requirements nagios
+  ignore_errors: yes
+  become: true
+  yum:
+    state: present
+    name: "{{ item }}"
+  with_items: "{{ packages_nagios }}"  
+
+- name: Install common software requirements python
+  ignore_errors: yes
+  become: true
+  yum:
+    state: present
+    name: "{{ item }}"
+  with_items: "{{ packages_python }}"  
+
+- name: Installing pip_modules for dependency
+  ignore_errors: yes
+  pip:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ pip_modules }}"
+  when: ansible_distribution == 'CentOS' and (ansible_distribution_major_version == '7' or ansible_distribution_major_version == '8') 
+
+- name: Configuration nrpe
+  template:
+    src: "hoster_centos.j2"
+    dest: "/etc/nrpe.d/hoster.cfg"
+  notify: restart nrpe

@@ -1,0 +1,28 @@
+# Variable configuration.
+- include_vars: Debian.yml
+
+- name: Install common software requirements nagios
+  ignore_errors: yes
+  apt:
+    pkg: "{{ item }}"
+    state: present
+    install_recommends: no
+    update_cache: yes
+  with_items: "{{ packages_nagios }}"
+
+
+- name: Install common software requirements python
+  ignore_errors: yes
+  apt:
+    pkg: "{{ item }}"
+    state: present
+    install_recommends: no
+    update_cache: yes
+  with_items: "{{ packages_python }}"
+
+
+- name: Configuration nrpe
+  template:
+    src: "hoster.j2"
+    dest: "/etc/nagios/nrpe.d/hoster.cfg"
+  notify: restart nrpe

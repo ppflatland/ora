@@ -1,0 +1,6 @@
+packages: ['nagios-nrpe-server',
+           'nagios-plugins',
+           'python-pip']
+
+pip_modules: ['pymysql']
+
